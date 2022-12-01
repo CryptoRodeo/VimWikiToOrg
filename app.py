@@ -3,7 +3,7 @@ import re
 # Regex References
 ###############################
 #
-# Use this to find the vimwiki headings
+
 heading = r"^=(.*)=$"
 
 # heading 1, 2, 3...
@@ -29,11 +29,15 @@ code_block = "\{\{\{([^}]*)\}\}\}"
 
 
 def getInnerText(rgx, text):
-    res = re.search(rgx, text)
-    if res:
-        f = res.group(1)
-        return f
-    return None
+    matches = re.finditer(rgx, text, re.MULTILINE)
+    for matchNum, match in enumerate(matches, start=1):
+
+        print ("Match {matchNum} was found at {start}-{end}: {match}".format(matchNum = matchNum, start = match.start(), end = match.end(), match = match.group()))
+
+        for groupNum in range(0, len(match.groups())):
+            groupNum = groupNum + 1
+
+            print ("Group {groupNum} found at {start}-{end}: {group}".format(groupNum = groupNum, start = match.start(groupNum), end = match.end(groupNum), group = match.group(groupNum)))
 
 # Headings
 #==============================
@@ -74,4 +78,16 @@ test_text = """
     doTheThing()
 }}}
 """
+
 print(getInnerText(code_block, test_text))
+
+## Read a file, save it's contents to a string var
+file_text = ""
+with open("./FIRE.wiki", 'r') as f:
+    file_text = f.read()
+
+#print(getInnerText("^=(.*)=$", file_text))
+
+# Scann through text for headings found.
+regex = "^=(.*)=$"
+getInnerText(regex, file_text)
