@@ -53,16 +53,13 @@ def find_header_level(txt):
 
     return level
 
-def get_header_level_regex(level):
-    return ("^=*(.*[^=])(={%s})$" % level)
-
 def remove_whitespace(txt):
     return txt.replace(' ', '')
 
 def generate_header(inner_text, header_end):
     heading_level = find_header_level(header_end)
-    rgx_for_level = get_header_level_regex(heading_level)
-    return pad_header(inner_text, heading_level)
+    header = pad_header(inner_text, heading_level)
+    return header
 
 def generate_replacement(text, replacement_type):
     return REPLACEMENTS[replacement_type].replace(REPLACEMENT_PLACEHOLDER, text)
@@ -94,9 +91,4 @@ file_text = ""
 with open("./BasicMarkup.wiki", 'r') as f:
     file_text = f.read()
 
-final_text = file_text
-
 print(perform(file_text))
-
-# NOTE:
-# - I think italic conversion is broken.
