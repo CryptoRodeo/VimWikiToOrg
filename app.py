@@ -1,4 +1,4 @@
-import re
+import re, glob, os
 
 REGEX = {
 #    "heading"              : "^=(.*)={1,}$", # original
@@ -11,19 +11,35 @@ REGEX = {
     "code_block"           : "\{\{\{([^}]*)\}\}\}",
 }
 
-REPLACEMENTS = {
-    "heading"              : "* #" ,
-    "italic"               : "/#/",
-    "inline_code"          : "~#~",
+#REPLACEMENTS = {
+#    "heading"              : "* #" ,
+#    "italic"               : "/#/",
+#    "inline_code"          : "~#~",
+#    # TODO - links might need some work?
+#    "basic_link"           : "[#]",
+#    "link_with_description": "[#]",
+#    "file_link"            : "[#]",
+#    # TODO - verify
+#    "code_block"           : "#+begin_src #\r#+end_src",
+#}
+
+REPLACEMENT_PLACEHOLDER = "<^>"
+
+_REPLACEMENT_HASH = {
+    "heading"              : "* {}" ,
+    "italic"               : "/{}/",
+    "inline_code"          : "~{}~",
     # TODO - links might need some work?
-    "basic_link"           : "[#]",
-    "link_with_description": "[#]",
-    "file_link"            : "[#]",
+    "basic_link"           : "[{}]",
+    "link_with_description": "[{}]",
+    "file_link"            : "[{}]",
     # TODO - verify
-    "code_block"           : "begin_src #\rend_src",
+    "code_block"           : "#+begin_src {}\r\n#+end_src",
 }
 
-REPLACEMENT_PLACEHOLDER = "#"
+REPLACEMENTS = {markdown: replacement.format(REPLACEMENT_PLACEHOLDER) for markdown, replacement in _REPLACEMENT_HASH.items()}
+
+NEW_FILE_STORAGE = './ConvertedWikis/{}'.format('<^>')
 
 # generate headings based on level
 def pad_header(header_txt, level):
@@ -87,8 +103,30 @@ def perform(text):
     return final_text
 
 ## Read a file, save it's contents to a string var
-file_text = ""
-with open("./BasicMarkup.wiki", 'r') as f:
-    file_text = f.read()
+#file_text = ""
+#with open("./BasicMarkup.wiki", 'r') as f:
+#    file_text = f.read()
+#
+#print(perform(file_text))
 
-print(perform(file_text))
+# Grabbing all files in ~/vimwiki
+# first we need the username since I guess glob doesn't do relative paths?
+user = os.getlogin()
+wiki_files = [ wiki for wiki in glob.glob("/home/{user}/vimwiki/*.wiki".format(user=user)) ]
+migrated_files = []
+for file_location in wiki_files:
+    file_name = file_location.split("/")[-1]
+    with open(file_location, 'r') as wiki:
+        file_content = wiki.read()
+        converted_content = perform(file_content)
+        new_file_name = file_name.replace('.wiki','.org')
+        new_file_location = NEW_FILE_STORAGE.replace(REPLACEMENT_PLACEHOLDER, new_file_name)
+        migrated_files.append({
+            "location": new_file_location,
+            "content": converted_content,
+        })
+
+for new_file in migrated_files:
+    with open(new_file["location"], 'a+') as f:
+        f.write(new_file["content"])
+
