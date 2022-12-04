@@ -5,3 +5,4 @@ tmp/
 converted_files/*
 .venv/*
 vimwiki_to_org/__pycache__/*
+.tox/*
