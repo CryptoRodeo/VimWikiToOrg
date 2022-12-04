@@ -2,4 +2,6 @@
 .idea
 *.log
 tmp/
-vimwiki_to_org/converted_files/*
+converted_files/*
+.venv/*
+vimwiki_to_org/__pycache__/*
