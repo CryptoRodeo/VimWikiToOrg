@@ -40,7 +40,6 @@ class App:
     def cleanup(self):
         for old_file in glob.glob(f"{EXPORT_DIR}/*.org"):
             try:
-                print(old_file)
                 os.remove(old_file)
             except OSError as e:
                 print(e)
