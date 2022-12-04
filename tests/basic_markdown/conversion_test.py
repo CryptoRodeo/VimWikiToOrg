@@ -4,7 +4,7 @@ import pytest
 from textwrap import dedent
 from vimwiki_to_org.src.converters.vimwiki_to_org import convert
 
-def test_markup():
+def test_basic_markup_conversions():
 
     wiki_code_block = dedent("""\
     {{{python
@@ -27,7 +27,7 @@ def test_markup():
 
     assert_conversion_result(test_data)
 
-def test_different_header_levels():
+def test_converting_different_header_levels():
     test_data = {
         "= header ="          :"* header ",
         "== header =="        :"** header ",
