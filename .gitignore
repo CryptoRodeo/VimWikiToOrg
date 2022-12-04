@@ -4,5 +4,6 @@
 tmp/
 converted_files/*
 .venv/*
-**/__pycache__/
+__pycache__/
+*.pyc
 .tox/*
