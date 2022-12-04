@@ -9,7 +9,7 @@
 
 **Extend for your own situation:**
  - The current config should be *good enough* for most basic VimWiki markdown, but **everyone's notes are different**.
- - Add or configure the [regex](./vimwiki_to_org/src/transformers/vimwiki_to_org.py#L6) and the [markdown replacements](./vimwiki_to_org/src/transformers/vimwiki_to_org.py#L17) to what suits your specific situation
+ - Add or configure the [regex](./vimwiki_to_org/src/converters/wiki_regex.py) and the [markdown replacements](./vimwiki_to_org/src/converters/helpers/org_markdown.py) to what suits your specific situation
 
 **Your .wiki files are safe:**
 - Your `.wiki` files are left alone and are **not modified**, just read
