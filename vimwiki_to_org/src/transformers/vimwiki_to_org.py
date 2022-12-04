@@ -10,7 +10,6 @@ REGEX = {
     "link"       : "\[\[(.*)\]\]",
     "file_link"  : "\{{2}(file:.*)\}{2}",
     "code_block" : "\{{3}([^}]*)\}{3}",
-
 }
 
 PLACEHOLDER = "<^>"
@@ -47,22 +46,22 @@ def apply_replacement(full_text, original_markup, replacement_markup):
 
 
 def generate_link_replacement(full_text, original_markup, link_text):
-    final_text = link_text + '.org'
-    replacement = generate_replacement(final_text, "link")
+    _text = link_text + '.org'
+    replacement = generate_replacement(_text, "link")
     return apply_replacement(full_text, original_markup, replacement)
 
 
 def apply_substitution(text, regex, match, replacement_type):
-    original_text = match.group(0)
-    inner_text = match.group(1)
+    match_text = match.group(0)
+    match_inner_text = match.group(1)
 
     if replacement_type == "heading":
         heading_end = match.group(2)
-        replacement = header_helper.generate_header(inner_text, heading_end)
-        return apply_replacement(text, original_text, replacement)
+        replacement = header_helper.generate_header(match_inner_text, heading_end)
+        return apply_replacement(text, match_text, replacement)
 
     if replacement_type == "link":
-        return generate_link_replacement(text, original_text, inner_text)
+        return generate_link_replacement(text, match_text, match_inner_text)
 
-    replacement = generate_replacement(inner_text, replacement_type)
-    return apply_replacement(text, original_text, replacement)
+    replacement = generate_replacement(match_inner_text, replacement_type)
+    return apply_replacement(text, match_text, replacement)
