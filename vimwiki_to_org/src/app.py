@@ -2,11 +2,10 @@
 #
 import glob
 import os
-from src.transformers.vimwiki_to_org import convert
+from src.converters.vimwiki_to_org import convert
 from src.helpers.progress_bar import ProgressBar
 
 EXPORT_DIR = "./converted_files/"
-PLACEHOLDER = "<^>"
 
 
 class App:
