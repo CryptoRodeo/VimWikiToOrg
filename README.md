@@ -2,8 +2,8 @@
 > Migration to Org mode, made a bit easier
 
 ## Goals:
- - The purpose of this project is to make it easier to migrate existing VimWiki note to Org files
- - The goal is to have **at least** 60-70% of `.wiki` file content converted to Org mode markdown
+ - Make it easier to migrate over existing VimWiki files to Org files
+ - Have a *reasonable* amount of VimWiki markup converted to it's Org mode equivalent (**at least** 60-70%)
  
 ## Features:
 
