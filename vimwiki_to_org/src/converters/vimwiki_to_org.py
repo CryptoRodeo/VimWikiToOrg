@@ -4,6 +4,7 @@ from .helpers import header_helper
 from .helpers import link_helper
 from .helpers.org_markdown import PLACEHOLDER, ORG_MARKDOWN
 from .helpers.wiki_regex import REGEX
+from .helpers.prevention_tag import PREVENTION_TAG
 
 
 def convert(text):
@@ -20,13 +21,20 @@ def generate_replacement(text, replacement_type):
 
 
 def apply_replacement(full_text, original_markup, replacement_markup):
-    return full_text.replace(original_markup, replacement_markup)
+    # tag with prevention tag to avoid accidental overrides
+    new_markup = (replacement_markup + PREVENTION_TAG)
+
+    return full_text.replace(original_markup, new_markup)
 
 
 def apply_substitution(text, match_data, replacement_type):
     match_text = match_data.group(0)
     match_inner_text = match_data.group(1)
     replacement = ""
+
+    # Prevent overrides
+    if previously_converted(match_text):
+        return text
 
     match replacement_type:
         case "heading":
@@ -38,3 +46,7 @@ def apply_substitution(text, match_data, replacement_type):
             replacement = generate_replacement(match_inner_text, replacement_type)
 
     return apply_replacement(text, match_text, replacement)
+
+
+def previously_converted(text):
+    return PREVENTION_TAG in text
