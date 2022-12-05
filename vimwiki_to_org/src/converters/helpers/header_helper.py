@@ -7,8 +7,11 @@ def pad_header(header_txt, level):
 
     # remove any old headers if needed
     _txt = header_txt.replace("=", '')
+
     # Add single space to the left of the text
-    _txt = (' ' + _txt)
+    # so the heading registers correctly
+    if no_left_spacing(_txt):
+        _txt = (' ' + _txt)
     # Add header markdown
     final = _txt.rjust(len(_txt) + level , "*")
 
@@ -34,3 +37,6 @@ def generate_header(inner_text, header_end):
     heading_level = find_header_level(header_end)
     header = pad_header(inner_text, heading_level)
     return header
+
+def no_left_spacing(txt):
+    return txt[0] != ' '
