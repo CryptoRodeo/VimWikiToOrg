@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 import re
-
+from .org_markdown import ORG_MARKDOWN,PLACEHOLDER
 
 # generate headings based on level
 def pad_header(header_txt, level):
-    # remove any old headers if needed
-    txt = header_txt.replace("=", '')
 
-    final = txt.rjust(len(txt) + level , "*")
-    return final
+    # remove any old headers if needed
+    _txt = header_txt.replace("=", '')
+    # Add single space to the left of the text
+    _txt = (' ' + _txt)
+    # Add header markdown
+    final = _txt.rjust(len(_txt) + level , "*")
+
+    return ORG_MARKDOWN["heading"].replace(PLACEHOLDER, final)
 
 
 def find_header_level(txt):
