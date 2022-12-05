@@ -4,6 +4,7 @@ import glob
 import os
 from src.converters.vimwiki_to_org import convert
 from src.helpers.progress_bar import ProgressBar
+from src.converters.helpers.prevention_tag import PREVENTION_TAG
 
 EXPORT_DIR = "./converted_files/"
 
@@ -30,7 +31,10 @@ class App:
         self.export_files()
 
     def cache_file_data(self, file_name, content):
+        # change file type
         _fname = file_name.replace('.wiki', '.org')
+        # remove --converted tag
+        content = content.replace(PREVENTION_TAG, '')
         self.cached_file_data.append({
             "location": (EXPORT_DIR + _fname),
             "content": content,
