@@ -90,15 +90,15 @@ def greet(s):
 
 **Conversion of italics is currently not supported**:
 - VimWiki uses the following markdown for italic text: `_italic text_`
-- underscores can exist in content such as VimWiki code blocks and, based on the current implementation, this can interfere with content being converted properly
+- underscores can exist in content such as VimWiki code blocks and, based on the current implementation, this can interfere with content being converted.
 
-**asterisks, asterisk list, code examples with aterisk...**:
+**asterisks, asterisk list items, code examples with aterisk...**:
 
 - Because of how asterisks are used in org files, some content might not get converted.
 
 Personal example:
 
-This code block didn't get converted to an org code block because of the excess asterisks used:
+This code block in one of my files didn't get converted to an org code block because of the excess asterisks used in it:
 
 ```
 {{{bash
