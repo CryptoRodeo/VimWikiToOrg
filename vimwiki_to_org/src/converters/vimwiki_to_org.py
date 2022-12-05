@@ -9,7 +9,7 @@ from .helpers.wiki_regex import REGEX
 def convert(text):
     _text = text
     for markdown_type, regex in REGEX.items():
-        matches = re.finditer(regex, text, re.MULTILINE)
+        matches = re.finditer(regex, _text, re.MULTILINE)
         for matchNum, match in enumerate(matches, start=1):
             _text = apply_substitution(_text, match, markdown_type)
     return _text
@@ -34,8 +34,6 @@ def apply_substitution(text, match_data, replacement_type):
             replacement = header_helper.generate_header(match_text, heading_end)
         case "wiki_link":
             replacement = link_helper.generate_link_replacement(match_data)
-        case "code_block":
-            replacement = generate_replacement(match_inner_text, replacement_type)
         case _:
             replacement = generate_replacement(match_inner_text, replacement_type)
 
