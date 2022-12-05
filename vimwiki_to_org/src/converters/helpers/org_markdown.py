@@ -2,7 +2,6 @@ PLACEHOLDER = "<^>"
 DESCRIPTION_PLACEHOLDER = "<->"
 ORG_MARKDOWN = {
     "heading"              : f"{PLACEHOLDER}",
-    "italic"               : f"/{PLACEHOLDER}/",
     "inline_code"          : f"~{PLACEHOLDER}~",
     "wiki_link"            : f"[[file:{PLACEHOLDER}]]",
     "file_link"            : f"[[{PLACEHOLDER}]]",
