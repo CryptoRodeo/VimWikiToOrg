@@ -1,7 +1,11 @@
 # (Vim|Wiki)ToOrg 🦄
 > Migration to Org mode, made a bit easier
 
-**Convert this:**
+![workflow](https://github.com/CryptoRodeo/vimwiki_to_org/actions/workflows/main.yml/badge.svg)
+
+## What it does:
+
+**Converts this:**
 
 ```
 = Header1 =
@@ -25,6 +29,8 @@
 def greet(s):
     print("Hello, " + s)
 }}}
+
+`echo "42"`
 
 | a table |  |
 |---------|--|
@@ -50,8 +56,8 @@ def greet(s):
 [[file:wiki_link.org]]
 [[some wiki.org][description for some wiki file]]
 
--  bullet list item 1
--  bullet list item 2
+- bullet list item 1
+- bullet list item 2
     1) numbered list item 1
     2) numbered list item 2
 
@@ -61,17 +67,19 @@ def greet(s):
 
 #+end_src
 
+~echo "42"~
+
 | a table |  |
 |---------|--|
 |         |  |
 
-[[file:./some-image.png]]
+[[file:./some-image.png]
 
 ```
 
 ## Goals:
- - Make it easier to migrate over existing VimWiki files to Org files
- - Have a *reasonable* amount `.wiki` file content converted to it's `.org` equivalent (**at least** 60-70%) so you have less to manually edit.
+ - Make it easier to migrate over existing VimWiki files to `.org` files
+ - Have a *reasonable* amount `.wiki` file content converted to it's `.org` equivalent (**at least** 60-70%) so there's less to manually edit.
  
 ## Features:
 
