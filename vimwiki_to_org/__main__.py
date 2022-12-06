@@ -18,7 +18,7 @@ def main():
     parser.add_argument('-o',
                         '--output-path',
                         help="absolute path to output directory (optional)",
-                        default="converted_files/",
+                        default=f"{Path('converted_files').absolute()}",
                         type=str)
 
     args = parser.parse_args()
