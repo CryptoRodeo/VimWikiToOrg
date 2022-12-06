@@ -1,7 +1,7 @@
 # (Vim|Wiki)ToOrg 🦄
 > Migration to Org mode, made a bit easier
 
-![workflow](https://github.com/CryptoRodeo/vimwiki_to_org/actions/workflows/main.yml/badge.svg)
+![workflow](https://github.com/CryptoRodeo/VimWikiToOrg/actions/workflows/main.yml/badge.svg)
 
 ## What it does:
 
