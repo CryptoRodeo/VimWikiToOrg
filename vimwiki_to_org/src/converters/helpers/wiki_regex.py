@@ -6,6 +6,5 @@ REGEX = {
     "link_with_description": "\[\[(.*)\|(.*)\]\]",
     "file_link"            : "\{{2}(file:.*)\}{2}",
     "code_block"           : "\{{3}((\n|.)*?)\}{3}",
-#    "asterisk_list_item"   : "^\*([^\*])+$",
     "asterisk_list_item"   : "^\*(.+([^\*])$)",
 }
