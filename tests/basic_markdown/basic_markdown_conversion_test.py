@@ -22,7 +22,6 @@ def test_basic_markup_conversions():
     org_link_w_description = "[[some wiki.org][description for some wiki file]]"
     wiki_file_link = "{{file:./some-image.png}}"
     org_file_link = "[[file:./some-image.png]]"
-
     # lists
     wiki_bullet_list = format_text("""\
     * bullet list item 1
@@ -48,7 +47,6 @@ def test_basic_markup_conversions():
     }
 
     assert_conversion_result(test_data)
-
 
 def assert_conversion_result(data={}):
     for wiki_markup, expected_output in data.items():
