@@ -18,7 +18,7 @@
 *bold text*
 
 [[wiki_link]]
-[[some wiki|description for some wiki file]]
+[[some_wiki|description for some wiki file]]
 
 * bullet list item 1
 * bullet list item 2
@@ -54,7 +54,7 @@ def greet(s):
 *bold text*
 
 [[file:wiki_link.org]]
-[[some wiki.org][description for some wiki file]]
+[[some_wiki.org][description for some wiki file]]
 
 - bullet list item 1
 - bullet list item 2
@@ -73,8 +73,22 @@ def greet(s):
 |---------|--|
 |         |  |
 
-[[file:./some-image.png]
+[[file:./some-image.png]]
 
+```
+
+## Basic usage:
+
+```
+python vimwiki_to_org -h
+usage: vimwiki_to_org [-h] [-d WIKI_PATH] [-o OUTPUT_PATH]
+
+options:
+  -h, --help            show this help message and exit
+  -d WIKI_PATH, --wiki-path WIKI_PATH
+                        absolute path to vimwiki directory (optional) (default: /home/USERNAME/vimwiki/)
+  -o OUTPUT_PATH, --output-path OUTPUT_PATH
+                        absolute path to output directory (optional) (default: PROJECT_DIR/converted_files/)
 ```
 
 ## Goals:
@@ -85,22 +99,26 @@ def greet(s):
 
 **Extend for your own situation:**
  - The current config should be *good enough* for most basic VimWiki markdown, but **everyone's notes are different**.
- - Add or configure the [regex](./vimwiki_to_org/src/converters/helpers/wiki_regex.py) and the [markdown replacements](./vimwiki_to_org/src/converters/helpers/org_markdown.py) to what suits your specific situation
+ - Configure the [regex](./vimwiki_to_org/src/converters/helpers/wiki_regex.py) and the [markdown replacements](./vimwiki_to_org/src/converters/helpers/org_markdown.py) for your specific situation.
 
-**Your .wiki files are safe:**
-- Your `.wiki` files are left alone and are **not modified**, just read
-- All converted files are exported to the `converted_files` directory in the project directory
+**Your ~/vimwiki/ directory is safe:**
+- Your `.wiki` files are **not modified**, just read.
+- Regular files are not touched (`.png`, etc). **Those will have to be manually transferred**.
 
 **Keep your linked pages:**
-- `.wiki` files that linked to other `.wiki` files should be converted over, allowing you to still have your links between documents in the new `.org` files
+- Links between `.wiki` files are converted to link to their new `.org` pages.
+
+```
+[[SomeWikiPage]] -> [[file:SomeWikiPage.org]]
+```
 
 ### Common Issues:
 
 **Conversion of italics is currently not supported**:
-- VimWiki uses the following markdown for italic text: `_italic text_`
-- underscores can exist in content such as VimWiki code blocks and, based on the current implementation, this can interfere with content being converted.
+- VimWiki uses the following markdown for italic text: `_italic text_`.
+- underscores can exist in content such as VimWiki code blocks and, based on the current implementation, this can interfere with content conversion.
 
-**asterisks, asterisk list items, code examples with aterisk...**:
+**asterisks, asterisk list items, code examples with asterisks...**:
 
 - Because of how asterisks are used in org files, some content might not get converted.
 

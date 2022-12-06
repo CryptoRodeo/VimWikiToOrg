@@ -1,20 +1,22 @@
 #!/usr/bin/env python3
 #
-import glob
 import os
 from src.converters.vimwiki_to_org import convert
 from src.helpers.progress_bar import ProgressBar
 from src.converters.helpers.prevention_tag import PREVENTION_TAG
-
-EXPORT_DIR = "./converted_files/"
+from pathlib import Path
 
 
 class App:
 
-    def __init__(self, wiki_dir_path):
-        _glob_pattern = (wiki_dir_path + "*.wiki")
+    def __init__(self, wiki_dir_path: Path, output_path: Path):
+        # Keep the path object for globbing
+        self.output_path = output_path
+        # create regular path text for output directory
+        self.output_dir = str(output_path) + os.sep
+
         self.cached_file_data = []
-        self.files = [wiki for wiki in glob.glob(_glob_pattern)]
+        self.files = [wiki for wiki in wiki_dir_path.glob('*.wiki')]
 
     def run(self):
         self.cleanup()
@@ -36,12 +38,12 @@ class App:
         # remove --converted tag
         content = content.replace(PREVENTION_TAG, '')
         self.cached_file_data.append({
-            "location": (EXPORT_DIR + _fname),
+            "location": (self.output_dir + _fname),
             "content": content,
         })
 
     def cleanup(self):
-        for old_file in glob.glob(f"{EXPORT_DIR}/*.org"):
+        for old_file in self.output_path.glob("*.org"):
             try:
                 os.remove(old_file)
             except OSError as e:
