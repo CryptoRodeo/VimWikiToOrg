@@ -1,11 +1,9 @@
-#!/usr/bin/env python3
-
 import pytest
-from textwrap import dedent
-from vimwiki_to_org.src.converters.vimwiki_to_org import convert
-from vimwiki_to_org.src.converters.helpers.prevention_tag import PREVENTION_TAG
+from ..helpers.text_formatter import format_text
 
-def test_basic_markup_conversions():
+@pytest.fixture
+def basic_markdown_data():
+    # code blocks
     wiki_code_block = format_text("""\
     {{{python
     print("Hello World")
@@ -30,7 +28,7 @@ def test_basic_markup_conversions():
 
     org_dash_list = wiki_bullet_list.replace('*', '-')
 
-    test_data = {
+    return {
         "= header ="            :"* header ",
         "== header =="          :"** header ",
         "=== header ==="        :"*** header ",
@@ -45,19 +43,3 @@ def test_basic_markup_conversions():
         wiki_code_block         : org_code_block,
         wiki_bullet_list        : org_dash_list,
     }
-
-    assert_conversion_result(test_data)
-
-def assert_conversion_result(data={}):
-    for wiki_markup, expected_output in data.items():
-        actual = format_text(convert(wiki_markup))
-        assert actual == expected_output
-
-
-def format_text(txt):
-    formatted = dedent(txt)
-    formatted = remove_prevention_tag(formatted)
-    return formatted
-
-def remove_prevention_tag(txt):
-    return txt.replace(PREVENTION_TAG, '')
