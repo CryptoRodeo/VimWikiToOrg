@@ -23,7 +23,7 @@ def main():
 
     args = parser.parse_args()
     import_path = Path(args.wiki_path).absolute()
-    output_path = str(Path(args.output_path).absolute()) + os.sep
+    output_path = Path(args.output_path).absolute()
     App(import_path, output_path).run()
 
 
