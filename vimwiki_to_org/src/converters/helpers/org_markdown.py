@@ -8,5 +8,5 @@ ORG_MARKDOWN = {
     "file_link"            : f"[[{PLACEHOLDER}]]",
     "link_with_description": f"[[{PLACEHOLDER}][{DESCRIPTION_PLACEHOLDER}]]",
     "code_block"           : f"#+begin_src {PLACEHOLDER}\n#+end_src",
-    "asterisk_list_item"   : f"- {PLACEHOLDER}"
+    "asterisk_list_item"   : f"-{PLACEHOLDER}"
 }
