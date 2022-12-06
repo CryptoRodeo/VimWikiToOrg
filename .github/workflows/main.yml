@@ -1,0 +1,29 @@
+# Runs pytest and flake8 using tox
+#
+name: workflow
+
+# Should run on any branch and pull request
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install tox and other packages
+        run: pip install tox
+      - name: Run pytest
+        run: |
+          tox -e pytest
+      - name: Run flake8
+        run: |
+          tox -e flake8
