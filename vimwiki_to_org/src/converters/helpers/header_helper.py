@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import re
-from .org_markdown import ORG_MARKDOWN,PLACEHOLDER
+from .org_markdown import ORG_MARKDOWN, PLACEHOLDER
+
 
 # generate headings based on level
 def pad_header(header_txt, level):
@@ -37,6 +38,7 @@ def generate_header(inner_text, header_end):
     heading_level = find_header_level(header_end)
     header = pad_header(inner_text, heading_level)
     return header
+
 
 def no_left_spacing(txt):
     return txt[0] != ' '
