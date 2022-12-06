@@ -23,7 +23,7 @@ jobs:
         run: pip install tox
       - name: Run pytest
         run: |
-          tox -e pytest
+          tox -e vimwiki_to_org
       - name: Run flake8
         run: |
           tox -e flake8
