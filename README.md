@@ -18,7 +18,7 @@
 *bold text*
 
 [[wiki_link]]
-[[some wiki|description for some wiki file]]
+[[some_wiki|description for some wiki file]]
 
 * bullet list item 1
 * bullet list item 2
@@ -54,7 +54,7 @@ def greet(s):
 *bold text*
 
 [[file:wiki_link.org]]
-[[some wiki.org][description for some wiki file]]
+[[some_wiki.org][description for some wiki file]]
 
 - bullet list item 1
 - bullet list item 2
