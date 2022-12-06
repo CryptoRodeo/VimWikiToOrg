@@ -1,5 +1,5 @@
 import pytest
-from ..helpers.text_formatter import format_text
+from ..helpers.text_formatter import format_text, assert_conversion_results
 
 @pytest.fixture
 def basic_markdown_data():
