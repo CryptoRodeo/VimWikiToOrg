@@ -15,9 +15,9 @@ class ProgressBar:
     def progress(self):
         sleep(0.01)
         self.current_progress += 1
-        percent = self.width * ((self.current_progress) / self.total)
-        bar = ("#" * int(percent)) + ("-" * (self.width - int(percent)))
-        total_percentage = ((100 / self.width) * percent)
+        bar_width_percent = self.width * ((self.current_progress) / self.total)
+        bar = ("#" * int(bar_width_percent)) + ("-" * (self.width - int(bar_width_percent)))
+        total_percentage = ((100 / self.width) * bar_width_percent)
         print(
             f"\r|{bar}| {total_percentage:.2f}% "
             f"[{self.current_progress} of {self.total}]",
