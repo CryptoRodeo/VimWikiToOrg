@@ -4,7 +4,6 @@ from .helpers import header_helper
 from .helpers import link_helper
 from .helpers.org_markdown import PLACEHOLDER, ORG_MARKDOWN
 from .helpers.wiki_regex import HEADING_REGEX, MULTILINE_REGEX, TEXT_FORMATTING_REGEX, LINK_REGEX, LIST_REGEX
-#from .helpers.wiki_regex import REGEX
 from .helpers.prevention_tag import PREVENTION_TAG
 
 
@@ -68,18 +67,19 @@ def apply_substitution(text, match_data, replacement_type):
 def previously_converted(text):
     return PREVENTION_TAG in text
 
+
 def has_asterisk(txt):
-    txt.count('*') > 1
+    return txt.count('*') > 0
+
 
 def handle_asterisk_case(text, match_data, match_type):
     match_text = match_data.group(0)
     inner_text = match_data.group(1)
+    replacement = ""
 
-    match match_type:
-        case "asterisk_list_item":
-            if match_text.count("*") > 1:
-                replacement = generate_replacement(match_text, "bold_text")
-            else:
-                replacement = generate_replacement(inner_text, replacement_type)
+    if match_text.count("*") > 1:
+        replacement = generate_replacement(match_text, "bold_text")
+    else:
+        replacement = generate_replacement(inner_text, match_type)
 
     return apply_replacement(text, match_text, replacement)
