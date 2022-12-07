@@ -19,15 +19,15 @@ LINK_REGEX = {
 TEXT_FORMATTING_REGEX = {
     "bold_text" : "(\*(.*)\*$)",
     "inline_code" : "\`(.*)\`",
-    "italic_text": "_(.*)_"
+    "italic_text": "\s_(.*)_\s",
 }
 
 REGEX_BY_PRIORITY = [
     HEADING_REGEX,
     MULTILINE_REGEX,
-    TEXT_FORMATTING_REGEX,
     LINK_REGEX,
     LIST_REGEX,
+    TEXT_FORMATTING_REGEX,
 ]
 
 REGEX = {
