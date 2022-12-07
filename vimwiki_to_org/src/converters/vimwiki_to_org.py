@@ -3,21 +3,13 @@ import re
 from .helpers import header_helper
 from .helpers import link_helper
 from .helpers.org_markdown import PLACEHOLDER, ORG_MARKDOWN
-from .helpers.wiki_regex import HEADING_REGEX, MULTILINE_REGEX, TEXT_FORMATTING_REGEX, LINK_REGEX, LIST_REGEX
+from .helpers.wiki_regex import REGEX_BY_PRIORITY
 from .helpers.prevention_tag import PREVENTION_TAG
 
 
 def convert(text):
     _text = text
-    regex_by_priority = [
-        HEADING_REGEX,
-        MULTILINE_REGEX,
-        TEXT_FORMATTING_REGEX,
-        LINK_REGEX,
-        LIST_REGEX,
-    ]
-
-    for type_regex in regex_by_priority:
+    for type_regex in REGEX_BY_PRIORITY:
         for markdown_type, regex in type_regex.items():
             matches = re.finditer(regex, _text, re.MULTILINE)
             for matchNum, match in enumerate(matches, start=1):
