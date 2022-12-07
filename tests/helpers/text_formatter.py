@@ -13,7 +13,13 @@ def format_text_after_conversion(txt):
     """
     Formats test text after conversion
     """
+
+    # handle italics...
+    if "italic" in txt:
+        return remove_prevention_tag(txt)
+
     txt = format_text(txt)
+
     return remove_prevention_tag(txt)
 
 def remove_prevention_tag(txt):
