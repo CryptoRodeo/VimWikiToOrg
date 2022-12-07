@@ -46,7 +46,7 @@ def apply_substitution(text, match_data, replacement_type):
     if previously_converted(match_text):
         return text
 
-    if has_asterisk(match_text):
+    if asterisk_markdown_type(replacement_type):
         return handle_asterisk_case(text, match_data, replacement_type)
 
     if text_emphasis_type(replacement_type):
@@ -68,8 +68,8 @@ def previously_converted(text):
     return PREVENTION_TAG in text
 
 
-def has_asterisk(txt):
-    return txt.count('*') > 0
+def asterisk_markdown_type(match_type):
+    return match_type in ["bold_text", "asterisk_list_item"]
 
 
 def handle_asterisk_case(text, match_data, match_type):
@@ -94,7 +94,6 @@ def handle_text_emphasis(text, match_data, match_type):
             # sometimes multiple lines are captured, so lets individually
             # swap out the ` characters instead of doing it by regex groups.
             replacement = match_text.replace("`", "~")
-            print(replacement)
         case "italic_text":
             # same issue as the previous case
             replacement = match_text.replace("_", "/")
