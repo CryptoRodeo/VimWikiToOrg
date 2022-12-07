@@ -22,6 +22,14 @@ TEXT_FORMATTING_REGEX = {
     "italic_text": "_(.*)_"
 }
 
+REGEX_BY_PRIORITY = [
+    HEADING_REGEX,
+    MULTILINE_REGEX,
+    TEXT_FORMATTING_REGEX,
+    LINK_REGEX,
+    LIST_REGEX,
+]
+
 REGEX = {
     "heading"              : "^=*(.*[^=])(={1,6})$",
     "bold_text"            : "\*(.*)\*",
