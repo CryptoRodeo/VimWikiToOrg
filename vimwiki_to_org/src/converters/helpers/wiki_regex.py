@@ -19,6 +19,7 @@ LINK_REGEX = {
 TEXT_FORMATTING_REGEX = {
     "bold_text" : "(\*(.*)\*$)",
     "inline_code" : "\`(.*)\`",
+    "italic_text": "_(.*)_"
 }
 
 REGEX = {
