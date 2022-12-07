@@ -3,16 +3,27 @@ import re
 from .helpers import header_helper
 from .helpers import link_helper
 from .helpers.org_markdown import PLACEHOLDER, ORG_MARKDOWN
-from .helpers.wiki_regex import REGEX
+from .helpers.wiki_regex import HEADING_REGEX, MULTILINE_REGEX, TEXT_FORMATTING_REGEX, LINK_REGEX, LIST_REGEX
+#from .helpers.wiki_regex import REGEX
 from .helpers.prevention_tag import PREVENTION_TAG
 
 
 def convert(text):
     _text = text
-    for markdown_type, regex in REGEX.items():
-        matches = re.finditer(regex, _text, re.MULTILINE)
-        for matchNum, match in enumerate(matches, start=1):
-            _text = apply_substitution(_text, match, markdown_type)
+    regexes_by_priority = [
+        HEADING_REGEX,
+        MULTILINE_REGEX,
+        TEXT_FORMATTING_REGEX,
+        LINK_REGEX,
+        LIST_REGEX,
+    ]
+
+    for type_regex in regexes_by_priority:
+        for markdown_type, regex in type_regex.items():
+            matches = re.finditer(regex, _text, re.MULTILINE)
+            for matchNum, match in enumerate(matches, start=1):
+                _text = apply_substitution(_text, match, markdown_type)
+
     return _text
 
 
@@ -36,12 +47,18 @@ def apply_substitution(text, match_data, replacement_type):
     if previously_converted(match_text):
         return text
 
+    if has_asterisk(match_text):
+        return handle_asterisk_case(text, match_data, replacement_type)
+
     match replacement_type:
         case "heading":
             heading_end = match_data.group(2)
             replacement = header_helper.generate_header(match_text, heading_end)
         case "wiki_link":
             replacement = link_helper.generate_link_replacement(match_data)
+        case "inline_code":
+            # sometimes multiple lines are captured, so lets individually
+            replacement = match_text.replace("`", "~")
         case _:
             replacement = generate_replacement(match_inner_text, replacement_type)
 
@@ -50,3 +67,19 @@ def apply_substitution(text, match_data, replacement_type):
 
 def previously_converted(text):
     return PREVENTION_TAG in text
+
+def has_asterisk(txt):
+    txt.count('*') > 1
+
+def handle_asterisk_case(text, match_data, match_type):
+    match_text = match_data.group(0)
+    inner_text = match_data.group(1)
+
+    match match_type:
+        case "asterisk_list_item":
+            if match_text.count("*") > 1:
+                replacement = generate_replacement(match_text, "bold_text")
+            else:
+                replacement = generate_replacement(inner_text, replacement_type)
+
+    return apply_replacement(text, match_text, replacement)
