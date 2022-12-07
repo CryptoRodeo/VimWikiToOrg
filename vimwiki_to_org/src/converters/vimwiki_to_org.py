@@ -87,7 +87,6 @@ def handle_asterisk_case(text, match_data, match_type):
 
 def handle_text_emphasis(text, match_data, match_type):
     match_text = match_data.group(0)
-    inner_text = match_data.group(1)
     replacement = ""
 
     match match_type:
