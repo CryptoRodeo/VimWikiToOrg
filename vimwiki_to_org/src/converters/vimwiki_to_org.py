@@ -3,16 +3,18 @@ import re
 from .helpers import header_helper
 from .helpers import link_helper
 from .helpers.org_markdown import PLACEHOLDER, ORG_MARKDOWN
-from .helpers.wiki_regex import REGEX
+from .helpers.wiki_regex import REGEX_BY_PRIORITY
 from .helpers.prevention_tag import PREVENTION_TAG
 
 
 def convert(text):
     _text = text
-    for markdown_type, regex in REGEX.items():
-        matches = re.finditer(regex, _text, re.MULTILINE)
-        for matchNum, match in enumerate(matches, start=1):
-            _text = apply_substitution(_text, match, markdown_type)
+    for type_regex in REGEX_BY_PRIORITY:
+        for markdown_type, regex in type_regex.items():
+            matches = re.finditer(regex, _text, re.MULTILINE)
+            for matchNum, match in enumerate(matches, start=1):
+                _text = apply_substitution(_text, match, markdown_type)
+
     return _text
 
 
@@ -36,6 +38,12 @@ def apply_substitution(text, match_data, replacement_type):
     if previously_converted(match_text):
         return text
 
+    if asterisk_markdown_type(replacement_type):
+        return handle_asterisk_case(text, match_data, replacement_type)
+
+    if text_emphasis_type(replacement_type):
+        return handle_text_emphasis(text, match_data, replacement_type)
+
     match replacement_type:
         case "heading":
             heading_end = match_data.group(2)
@@ -50,3 +58,40 @@ def apply_substitution(text, match_data, replacement_type):
 
 def previously_converted(text):
     return PREVENTION_TAG in text
+
+
+def asterisk_markdown_type(match_type):
+    return match_type in ["bold_text", "asterisk_list_item"]
+
+
+def handle_asterisk_case(text, match_data, match_type):
+    match_text = match_data.group(0)
+    inner_text = match_data.group(1)
+    replacement = ""
+
+    if match_text.count("*") > 1:
+        replacement = generate_replacement(match_text, "bold_text")
+    else:
+        replacement = generate_replacement(inner_text, match_type)
+
+    return apply_replacement(text, match_text, replacement)
+
+
+def handle_text_emphasis(text, match_data, match_type):
+    match_text = match_data.group(0)
+    replacement = ""
+
+    match match_type:
+        case "inline_code":
+            # sometimes multiple lines are captured, so lets individually
+            # swap out the ` characters instead of doing it by regex groups.
+            replacement = match_text.replace("`", "~")
+        case "italic_text":
+            # same issue as the previous case
+            replacement = match_text.replace("_", "/")
+
+    return apply_replacement(text, match_text, replacement)
+
+
+def text_emphasis_type(match_type):
+    return match_type in ["italic_text", "inline_code"]

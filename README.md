@@ -16,9 +16,10 @@
 ====== Heading6 ======
 
 *bold text*
+_italic text_
 
 [[wiki_link]]
-[[some_wiki|description for some wiki file]]
+[[some wiki|description for some wiki file]]
 
 * bullet list item 1
 * bullet list item 2
@@ -52,9 +53,10 @@ def greet(s):
 ****** Heading6 
 
 *bold text*
+/italic text/
 
 [[file:wiki_link.org]]
-[[some_wiki.org][description for some wiki file]]
+[[some wiki.org][description for some wiki file]]
 
 - bullet list item 1
 - bullet list item 2
@@ -112,27 +114,9 @@ options:
 [[SomeWikiPage]] -> [[file:SomeWikiPage.org]]
 ```
 
-### Common Issues:
-
-**Conversion of italics is currently not supported**:
-- VimWiki uses the following markdown for italic text: `_italic text_`.
-- underscores can exist in content such as VimWiki code blocks and, based on the current implementation, this can interfere with content conversion.
-
-**asterisks, asterisk list items, code examples with asterisks...**:
-
-- Because of how asterisks are used in org files, some content might not get converted.
-
-Personal example:
-
-This code block in one of my files didn't get converted to an org code block because of the excess asterisks used in it:
-
-```
-{{{bash
-# crontab examples:
-* * * * * command # run command every minute
-* 30 7 * * * command # run command at 7:30 everyday
-* 30 7 5 * * command # run command at 7:30 the 5th day of every month
-* 30 7 5 1 * command # run the command at 7:30 every january 5
-* 30 7 * * 1 command # run the command at 7:30 every monday
-}}}
-```
+**Regex is applied by priority:**
+- Headers, code blocks and links get handled first before converting text emphasis markdown
+- This is to avoid accidentally converting things like:
+  - underscores used in a code block to italic text: `some_var_name -> some/var/name`
+  - file names with underscores converted to italic text: ```file:some_file_name.png -> file:some/file/name.png```
+  - etc, etc.

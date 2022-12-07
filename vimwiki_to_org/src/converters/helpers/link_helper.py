@@ -1,6 +1,6 @@
 import re
 from .org_markdown import PLACEHOLDER, DESCRIPTION_PLACEHOLDER, ORG_MARKDOWN
-from .wiki_regex import REGEX
+from .wiki_regex import LINK_REGEX
 
 
 def generate_replacement(data, replacement_type):
@@ -45,7 +45,7 @@ def generate_link_replacement(match_data):
 
 def match_data_for_type(mkdown_type, text):
     if mkdown_type == "link_with_description":
-        return re.match(REGEX["link_with_description"], text, re.MULTILINE)
+        return re.match(LINK_REGEX["link_with_description"], text, re.MULTILINE)
 
 
 def get_actual_link_type(full_link_text):
