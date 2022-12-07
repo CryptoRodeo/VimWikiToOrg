@@ -9,7 +9,7 @@ from .helpers.prevention_tag import PREVENTION_TAG
 
 def convert(text):
     _text = text
-    regexes_by_priority = [
+    regex_by_priority = [
         HEADING_REGEX,
         MULTILINE_REGEX,
         TEXT_FORMATTING_REGEX,
@@ -17,7 +17,7 @@ def convert(text):
         LIST_REGEX,
     ]
 
-    for type_regex in regexes_by_priority:
+    for type_regex in regex_by_priority:
         for markdown_type, regex in type_regex.items():
             matches = re.finditer(regex, _text, re.MULTILINE)
             for matchNum, match in enumerate(matches, start=1):
@@ -49,15 +49,15 @@ def apply_substitution(text, match_data, replacement_type):
     if has_asterisk(match_text):
         return handle_asterisk_case(text, match_data, replacement_type)
 
+    if text_emphasis_type(replacement_type):
+        return handle_text_emphasis(text, match_data, replacement_type)
+
     match replacement_type:
         case "heading":
             heading_end = match_data.group(2)
             replacement = header_helper.generate_header(match_text, heading_end)
         case "wiki_link":
             replacement = link_helper.generate_link_replacement(match_data)
-        case "inline_code":
-            # sometimes multiple lines are captured, so lets individually
-            replacement = match_text.replace("`", "~")
         case _:
             replacement = generate_replacement(match_inner_text, replacement_type)
 
@@ -83,3 +83,25 @@ def handle_asterisk_case(text, match_data, match_type):
         replacement = generate_replacement(inner_text, match_type)
 
     return apply_replacement(text, match_text, replacement)
+
+
+def handle_text_emphasis(text, match_data, match_type):
+    match_text = match_data.group(0)
+    inner_text = match_data.group(1)
+    replacement = ""
+
+    match match_type:
+        case "inline_code":
+            # sometimes multiple lines are captured, so lets individually
+            # swap out the ` characters instead of doing it by regex groups.
+            replacement = match_text.replace("`", "~")
+            print(replacement)
+        case "italic_text":
+            # same issue as the previous case
+            replacement = match_text.replace("_", "/")
+
+    return apply_replacement(text, match_text, replacement)
+
+
+def text_emphasis_type(match_type):
+    return match_type in ["italic_text", "inline_code"]
