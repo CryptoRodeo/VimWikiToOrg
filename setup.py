@@ -6,7 +6,7 @@ from os.path import join, relpath
 from setuptools import find_packages, setup
 
 
-version = "1.0.5"
+version = "1.2.0"
 
 entry_points = {
     'console_scripts': [
