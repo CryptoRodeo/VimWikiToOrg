@@ -89,12 +89,13 @@ def greet(s):
 
 Launch via CLI
 ```
-vimwiki_to_org
+vimwiki_to_org -d ~/vimwiki -o ./some_dir/
 ```
 
 or
+
 ```
-python -m vimwiki_to_org
+python -m vimwiki_to_org -d ~/vimwiki -o ./some_dir/
 ```
 
 ## Help
