@@ -3,6 +3,7 @@ from pathlib import Path
 from vimwiki_to_org.src.app import App
 import os
 
+
 def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
