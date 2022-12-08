@@ -3,6 +3,12 @@
 
 ![workflow](https://github.com/CryptoRodeo/VimWikiToOrg/actions/workflows/main.yml/badge.svg)
 
+## Install or update 
+
+```
+pip install -U vimwiki-to-org
+```
+
 ## What it does:
 
 **Converts this:**
@@ -79,18 +85,30 @@ def greet(s):
 
 ```
 
-## Basic usage:
+## Usage:
 
+Launch via CLI
 ```
-python vimwiki_to_org -h
+vimwiki_to_org
+```
+
+or
+```
+python -m vimwiki_to_org
+```
+
+## Help
+```
+vimwiki_to_org -h
+
 usage: vimwiki_to_org [-h] [-d WIKI_PATH] [-o OUTPUT_PATH]
 
 options:
   -h, --help            show this help message and exit
   -d WIKI_PATH, --wiki-path WIKI_PATH
-                        absolute path to vimwiki directory (optional) (default: /home/USERNAME/vimwiki/)
+                        path to vimwiki directory (optional) (default: /home/USERNAME/vimwiki/)
   -o OUTPUT_PATH, --output-path OUTPUT_PATH
-                        absolute path to output directory (optional) (default: PROJECT_DIR/converted_files/)
+                        path to output directory (optional) (default: PROJECT_DIR/converted_files/)
 ```
 
 ## Goals:
