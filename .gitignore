@@ -2,8 +2,12 @@
 .idea
 *.log
 tmp/
+dist/
+build/
+*.egg-info/
 converted_files/*
 .venv/*
 __pycache__/
 *.pyc
 .tox/*
+*.el
