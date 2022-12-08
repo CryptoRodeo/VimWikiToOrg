@@ -1,8 +1,7 @@
-from src.app import App
 import argparse
 from pathlib import Path
+from vimwiki_to_org.src.app import App
 import os
-
 
 def main():
     parser = argparse.ArgumentParser(
@@ -11,13 +10,13 @@ def main():
 
     parser.add_argument('-d',
                         '--wiki-path',
-                        help="absolute path to vimwiki directory (optional)",
+                        help="path to vimwiki directory (optional)",
                         default=f"/home/{os.getlogin()}/vimwiki/",
                         type=str)
 
     parser.add_argument('-o',
                         '--output-path',
-                        help="absolute path to output directory (optional)",
+                        help="path to output directory (optional)",
                         default=f"{Path('converted_files').absolute()}",
                         type=str)
 

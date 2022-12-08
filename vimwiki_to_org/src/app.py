@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 #
 import os
-from src.converters.vimwiki_to_org import convert
-from src.helpers.progress_bar import ProgressBar
-from src.converters.helpers.prevention_tag import PREVENTION_TAG
+from vimwiki_to_org.src.converters.vimwiki_to_org import convert
+from vimwiki_to_org.src.helpers.progress_bar import ProgressBar
+from vimwiki_to_org.src.converters.helpers.prevention_tag import PREVENTION_TAG
 from pathlib import Path
 
 
